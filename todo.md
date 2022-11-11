@@ -1,36 +1,64 @@
 # Social App 2
 
-## Backend
-- BUG: escape quotes in message
-- setup middleware validation
-- (admin panel routes)
-    - create user
-    - read all users
-    - edit user
-    - delete user
-
-  - posts routes OK
-  - login route DONE
-  - register route DONE
-  - private routes, need to show token DONE
-
-
 ## Frontend
-- react setup
-- create components and pages
-- react router setup
-- redux setup
-- redux get login information, token etc, don't lose info on refresh
-- register flow
-- login flow
-- bootstrap, layout, UI, etc
-- posts CRUD
+- Pages:
+  - Home page
+  - Register page
+    - (Replace username with email)
+  - Login page
+  - Wall page
+    - Create post
+    - List post
+    - Edit post modal
+    - Delete post modal
+  - (Admin page)
 
-- admin panel for users?
-- add email?
+- Redux store done
+- React cookie, set on login and remove on logout
 
-- username, email, password requirements and security
-- sql injections
+TODO: add email
+TODO: username, email, password requirements and security
+TODO: sql injections
+TODO: posts by user route
+
+BUG: NO EMPTY POSTS
+BUG: order posts
+BUG: logout from home doesn't clear username
+
+## Backend
+- Auth Routes:
+  - register
+  - login
+  - is-verify
+
+- Post Routes:
+  - Create
+  - Read, Read by user
+  - Update
+  - Delete
+
+- (Admin Routes)
+    - Create user
+    - Read all users
+    - Edit user
+    - Delete user
+
+TODO: setup middleware validation
+BUG: escape quotes in message
+TODO: add email
+TODO: posts by user route
 
 ## Database
-- can't do a foreign key anymore? to fix
+- User table
+  - id
+  - username
+  - password: (crypted)
+
+- Post table
+  - id
+  - user_id: FK users.id
+  - message
+  - timestamp: done automatically on the backend
+
+BUG: Foreign key doesn't work
+TODO: Add email
