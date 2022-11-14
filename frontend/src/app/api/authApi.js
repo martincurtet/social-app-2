@@ -14,6 +14,13 @@ const baseQuery = fetchBaseQuery({
 const authApi = createApi({
   baseQuery: baseQuery,
   endpoints: builder => ({
+    register: builder.mutation({
+      query: credentials => ({
+        url: '/register',
+        method: 'POST',
+        body: {...credentials }
+      })
+    }),
     login: builder.mutation({
       query: credentials => ({
         url: '/login',
@@ -24,6 +31,6 @@ const authApi = createApi({
   })
 })
 
-export const { useLoginMutation } = authApi
+export const { useLoginMutation, useRegisterMutation } = authApi
 
 export default authApi

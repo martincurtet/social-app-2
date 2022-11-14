@@ -1,20 +1,23 @@
 import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { useCookies } from 'react-cookie'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCurrentUsername } from '../features/auth/authSlice'
-import { logOut } from '../features/auth/authSlice'
+import { selectCurrentUsername, logOut } from '../features/auth/authSlice'
 
 const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies([])
   const username = useSelector(selectCurrentUsername)
   const dispatch = useDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    removeCookie('username')
     removeCookie('token')
-    dispatch(logOut())
+    await dispatch(logOut())
+    navigate(0)
   }
 
   return (
@@ -27,7 +30,9 @@ const Header = () => {
         <Col className='d-flex justify-content-center align-items-center'>Welcome, {username}</Col>
         }
         <Col className='d-flex justify-content-end gap-2'>
+          {username && location.pathname !== '/wall' ? (<Link to='/wall'><Button>Wall</Button></Link>) : (<></>)}
           {username ?
+            
             <Link to='/'><Button onClick={handleLogout}>Logout</Button></Link>
             :
             <Fragment>

@@ -21,9 +21,8 @@ TODO: username, email, password requirements and security
 TODO: sql injections
 TODO: posts by user route
 
-BUG: NO EMPTY POSTS
-BUG: order posts
-BUG: logout from home doesn't clear username
+BUG: order posts edited/created
+BUG: logout at homepage doesn't work? or just frontend
 
 ## Backend
 - Auth Routes:

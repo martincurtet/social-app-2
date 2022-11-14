@@ -1,27 +1,46 @@
 import React, { useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 import { FaEdit, FaTrash } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import { selectCurrentUsername } from '../features/auth/authSlice'
+import { useDeletePostMutation, useEditPostMutation } from '../app/api/postApi'
 
 const Post = ({ postData }) => {
+  const username = useSelector(selectCurrentUsername)
+
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [editPost, editResult] = useEditPostMutation()
+
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [deletePost, deleteResult] = useDeletePostMutation()
 
   const [editInput, setEditInput] = useState('')
+
+  const navigate= useNavigate()
 
   const openEditModal = () => {
     setEditInput(postData.content)
     setEditModalOpen(true)
   }
 
-  const closeEditModal = () => {
+  const closeEditModal = async (edit) => {
+    if (edit) {
+      await editPost({ id: postData.id, message: editInput })
+      navigate(0)
+    }
     setEditModalOpen(false)
   }
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true)
   }
-
-  const closeDeleteModal = () => {
+  
+  const closeDeleteModal = async (del) => {
+    if (del) {
+      await deletePost({ id: postData.id })
+      navigate(0)
+    }
     setDeleteModalOpen(false)
   }
 
@@ -48,10 +67,12 @@ const Post = ({ postData }) => {
         <div>{formatDate(postData.time)}</div>
       </div>
       <div className='mb-2'>{postData.content}</div>
+      {username === postData.user ? (
       <div className='d-flex flex-row-reverse gap-2'>
         <FaTrash style={{ cursor: 'pointer' }} size={24} onClick={openDeleteModal} />
         <FaEdit style={{ cursor: 'pointer' }} size={24} onClick={openEditModal} />
       </div>
+      ) : null}
 
       {/* EDIT MODAL */}
       <Modal show={editModalOpen} onHide={closeEditModal}>
@@ -70,8 +91,8 @@ const Post = ({ postData }) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant='secondary' onClick={closeEditModal}>Cancel</Button>
-          <Button variant='primary' onClick={closeEditModal}>Edit</Button>
+          <Button variant='secondary' onClick={() => closeEditModal(false)}>Cancel</Button>
+          <Button variant='primary' onClick={() => closeEditModal(true)}>Edit</Button>
         </Modal.Footer>
       </Modal>
 

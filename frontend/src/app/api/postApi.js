@@ -32,7 +32,7 @@ const postApi = createApi({
     editPost: builder.mutation({
       query: ({ id, message }) => ({
         url: `/${id}`,
-        method: 'PUT',
+        method: 'PATCH',
         body: {
           "message": message
         }

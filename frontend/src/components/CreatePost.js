@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import { Button, Form, InputGroup } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 import { useCreatePostMutation } from '../app/api/postApi'
 
 const CreatePost = () => {
   const [createInput, setCreateInput] = useState('')
-
   const [createPost, result] = useCreatePostMutation()
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      createPost({ message: createInput })
+      if (createInput === '') return
+      await createPost({ message: createInput })
       setCreateInput('')
+      navigate(0)
     } catch (err) {
       console.error(err.message)
     }
