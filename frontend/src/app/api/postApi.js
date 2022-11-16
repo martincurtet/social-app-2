@@ -24,18 +24,14 @@ const postApi = createApi({
       query: ({ message }) => ({
         url: `/`,
         method: 'POST',
-        body: {
-          "message": message
-        }
+        body: { "message": message }
       })
     }),
     editPost: builder.mutation({
       query: ({ id, message }) => ({
         url: `/${id}`,
-        method: 'PATCH',
-        body: {
-          "message": message
-        }
+        method: 'PUT',
+        body: { "message": message }
       })
     }),
     deletePost: builder.mutation({

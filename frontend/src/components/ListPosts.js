@@ -14,7 +14,7 @@ const ListPosts = () => {
       <div>Loading...</div>
       ) : data ? (
       <Fragment>
-        {data.slice(0).reverse().map((p, i) => (
+        {data.posts.slice(0).reverse().map((p, i) => (
           <Post
             key={i}
             postData={{
